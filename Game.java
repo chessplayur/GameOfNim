@@ -2,17 +2,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in); 
     private Player player1;
     private Player player2;
 
     public Game() {
-        //Scanner sc = new Scanner(System.in);
-
         System.out.print("Enter name for Player 1: ");
         String name1 = sc.nextLine();
 
-        System.out.print("Do you want to play against a dumb robot? (y/n): ");
+        System.out.print("Do you want to play against a bot? (y/n): ");
         String choice = sc.nextLine().trim().toLowerCase();
 
         if (choice.equals("y")) {
@@ -37,6 +35,7 @@ public class Game {
         System.out.println(player1.getName() + ": " + player1.getScore());
         System.out.println(player2.getName() + ": " + player2.getScore());
         System.out.println("Thanks for playing!");
+        sc.close(); 
     }
 
     private boolean playAgain() {
@@ -50,20 +49,26 @@ public class Game {
 
         while (Board.getNumPieces() > 0) {
             if (player1Turn) {
-                player1.takeTurn(sc);
+                player1.takeTurn(sc); 
             } else {
-                player2.takeTurn(sc);
+                player2.takeTurn(sc); 
             }
             player1Turn = !player1Turn;
+            
+            if (Board.getNumPieces() > 0) {
+                 System.out.println("--- Pieces remaining: " + Board.getNumPieces() + " ---\n");
+            }
         }
 
-        // The player who just played lost
+        
         Player winner = player1Turn ? player1 : player2;
         winner.incrScore();
 
-        System.out.println("\nThe pile is empty! " + winner.getName() + " wins this round!\n");
+        System.out.println("\n*********************************");
+        System.out.println("The pile is empty! " + winner.getName() + " wins this round!");
+        System.out.println("*********************************\n");
 
-        //Scanner sc = new Scanner(System.in);
+        
         System.out.print("Play again? (y/n): ");
         String answer = sc.nextLine().trim().toLowerCase();
         return answer.equals("y");
